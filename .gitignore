@@ -1,0 +1,7 @@
+.env
+node_modules
+dist
+microservices/auth-service/node_modules
+microservices/product-service/node_modules
+microservices/shipping-service/node_modules
+microservices/user-service/node_modules

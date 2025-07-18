@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
+    },
+    "include": ["src/**/*.ts", "../../shared/src/models/User.ts"],
+    "exclude": ["node_modules"]
+}
