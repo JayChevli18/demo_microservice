@@ -9,23 +9,23 @@ export class Product {
     @Column()
     name: string;
 
-    @Column()
-    description: string;
+    // @Column()
+    // description: string;
 
-    @Column()
-    price: number;
+    // @Column()
+    // price: number;
 
-    @Column({ nullable: true })
-    quantity: number;
+    // @Column({ nullable: true })
+    // quantity: number;
 
-    @Column({ nullable: true })
-    imageUrl: string;
+    // @Column({ nullable: true })
+    // imageUrl: string;
 
-    @Column({ nullable: true })
-    weight: number; // Important for shipping calculations
+    // @Column({ nullable: true })
+    // weight: number; // Important for shipping calculations
 
-    @Column({ nullable: true })
-    dimensions: string; // Important for shipping calculations
+    // @Column({ nullable: true })
+    // dimensions: string; // Important for shipping calculations
 
     @OneToMany(() => Order, (order) => order.product, { nullable: true })
     orders: Order[];
