@@ -1,17 +1,18 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Order } from './Order';
+
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ nullable: true })
+    @Column()
     name: string;
 
-    @Column({ nullable: true })
+    @Column()
     description: string;
 
-    @Column({ nullable: true })
+    @Column()
     price: number;
 
     @Column({ nullable: true })
@@ -20,6 +21,12 @@ export class Product {
     @Column({ nullable: true })
     imageUrl: string;
 
+    @Column({ nullable: true })
+    weight: number; // Important for shipping calculations
+
+    @Column({ nullable: true })
+    dimensions: string; // Important for shipping calculations
+
     @OneToMany(() => Order, (order) => order.product, { nullable: true })
     orders: Order[];
-}
+} 

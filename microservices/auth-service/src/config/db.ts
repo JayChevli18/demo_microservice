@@ -1,10 +1,8 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { User } from '../../../../shared/src/models/User';
-import dotenv from 'dotenv';
-import path from 'path';
 
-dotenv.config();
+
 export const AppDataSource = new DataSource({
     type: 'postgres',
     host: process.env.POSTGRES_HOST,

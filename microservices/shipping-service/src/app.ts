@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import shippingRoutes from './routes/shippingRoutes';
 import { AppDataSource } from './config/db';

@@ -2,72 +2,96 @@ version: '3.8'
 
 services:
   auth-service:
-    build: ./microservices/auth-service
+    build:
+      context: .
+      dockerfile: ./microservices/auth-service/Dockerfile
     ports:
       - "5000:5000"
     depends_on:
       - postgres
       - rabbitmq
-    volumes:
-      - ./shared:/app/shared
+    # volumes:
+    #   - ./shared:/app/shared
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=ecommerce
       - RABBITMQ_HOST=rabbitmq
+      - JWT_SECRET=admin
     networks:
       - demo_microservice
 
   user-service:
-    build: ./microservices/user-service
+    build:
+      context: .
+      dockerfile: ./microservices/user-service/Dockerfile
     ports:
       - "5001:5001"
     depends_on:
       - postgres
-    volumes:
-      - ./shared:/app/shared
+      - rabbitmq
+      - auth-service
+    # volumes:
+    #   - ./shared:/app/shared
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=ecommerce
+      - JWT_SECRET=admin
+      - AUTH_SERVICE_URL=http://auth-service:5000
     networks:
       - demo_microservice
 
   product-service:
-    build: ./microservices/product-service
+    build:
+      context: .
+      dockerfile: ./microservices/product-service/Dockerfile
     ports:
       - "5002:5002"
     depends_on:
       - postgres
       - rabbitmq
-    volumes:
-      - ./shared:/app/shared
+      - auth-service
+      - user-service
+    # volumes:
+    #   - ./shared:/app/shared
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=ecommerce
       - RABBITMQ_HOST=rabbitmq
+      - AUTH_SERVICE_URL=http://auth-service:5000
+      - RABBITMQ_URI=amqp://admin:admin@rabbitmq:5672
     networks:
       - demo_microservice
 
   shipping-service:
-    build: ./microservices/shipping-service
+    build:
+      context: .
+      dockerfile: ./microservices/shipping-service/Dockerfile
     ports:
       - "5004:5004"
     depends_on:
       - postgres
       - rabbitmq
-    volumes:
-      - ./shared:/app/shared
+      - user-service
+      - product-service
+
+    # volumes:
+    #   - ./shared:/app/shared
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=ecommerce
       - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_URI=amqp://admin:admin@rabbitmq:5672
+
+    restart: on-failure
+
     networks:
       - demo_microservice
 

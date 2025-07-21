@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
 import { registerUser, loginUser } from '../services/authService';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import path from 'path';
 
-dotenv.config({ path: path.resolve(__dirname, '../../../../.env'), debug: true });
 
 export const register = async (req: Request, res: Response) => {
     try {
+        console.log(process.env.POSTGRES_HOST, "EBFDVER");
         const { username, email, password } = req.body;
         const user = await registerUser(username, email, password);
         res.status(201).json({ message: 'User registered successfully', user });

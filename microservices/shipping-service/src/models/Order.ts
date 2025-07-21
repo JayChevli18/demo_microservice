@@ -6,19 +6,21 @@ export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Product, (product) => product.orders, { nullable: true })
+    @ManyToOne(() => Product, (product) => product.orders)
     product: Product;
 
-    @Column({ nullable: true })
+    @Column()
     quantity: number;
 
     @Column({ nullable: true })
     price: number;
 
-    @Column({ nullable: true })
+    @Column()
     userId: number;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     orderDate: Date;
 
-}   
+    @Column({ nullable: true })
+    status: string;
+} 

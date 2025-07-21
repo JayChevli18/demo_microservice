@@ -26,7 +26,8 @@ export const updateShippingStatus = async (shippingId: number, status: string) =
 
 export const consumeOrderFromQueue = async ()=>{
     try{
-        const connection=await amqp.connect('amqp://localhost:5672');
+        const rabbitmqUri=process.env.RABBITMQ_URI || 'amqp://localhost:5672';
+        const connection=await amqp.connect(rabbitmqUri);
         const channel=await connection.createChannel();
         const queue='orderQueue';
         await channel.assertQueue(queue, { durable: false });
@@ -47,3 +48,8 @@ export const consumeOrderFromQueue = async ()=>{
 }
 
 consumeOrderFromQueue();
+
+export const getShippingAll = async () => {
+    const shipping = await AppDataSource.getRepository(Shipping).find();
+    return shipping;
+}

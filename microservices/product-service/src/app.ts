@@ -1,9 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import productRoutes from './routes/productRoutes';
 import { AppDataSource } from './config/db';
-
-// Specify the path to the .env file located in the project root
-// dotenv.config({ path: path.resolve(__dirname, '../../../.env'), debug: true });
 
 const app = express();
 app.use(express.json());

@@ -2,19 +2,25 @@
 FROM node:22.16.0
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /
 
 # Copy package.json and package-lock.json first to take advantage of Docker's caching mechanism
-COPY package*.json ./
+COPY microservices/shipping-service/package*.json ./
 
 # Install dependencies
 RUN npm install --force
+
+COPY microservices/shipping-service/tsconfig.json ./tsconfig.json
 
 # Install ts-node and typescript globally to run TypeScript files directly
 RUN npm install -g ts-node typescript
 
 # Copy the source code into the container
-COPY ./src ./src
+COPY microservices/shipping-service/src ./src
+
+COPY shared ./shared
+
+RUN tsc
 
 # Expose the port
 EXPOSE 5004

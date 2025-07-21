@@ -4,7 +4,8 @@ import { Order } from '../models/Order';
 
 export const publishOrderToQueue = async (order:Order, address:string)=>{
     try{
-        const connection=await amqp.connect('amqp://localhost:5672');
+        const rabbitmqUri=process.env.RABBITMQ_URI || 'amqp://localhost:5672';
+        const connection=await amqp.connect(rabbitmqUri);
         const channel=await connection.createChannel();
 
         const queue='orderQueue';

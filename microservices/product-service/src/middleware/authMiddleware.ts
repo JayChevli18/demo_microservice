@@ -12,7 +12,8 @@ export const verifyToken = async (req: AuthenticatedRequest, res: Response, next
         return res.status(401).json({ message: 'Unauthorized' });
     }
     try {
-        const response=await axios.post(`http://localhost:5000/api/auth/verify-token`, { token });
+        const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:5000';
+        const response=await axios.post(`${authServiceUrl}/api/auth/verify-token`, { token });
         if(response.data.valid){
             req.user=response.data.decoded;
             next();
